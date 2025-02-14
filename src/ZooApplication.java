@@ -23,10 +23,13 @@ public class ZooApplication {
                     AddNewAnimal(scanner, zoo);
                     break;
                 case 2:
-                    PrintAnimals(zoo.getAnimals());
+                    PrintAnimals(zoo.getAnimals(),
+                            "Животных в зоопарке: " + zoo.getAnimalsNumber());
                     break;
                 case 3:
-                    PrintAnimals(zoo.getFriendlyAnimals().toList());
+                    PrintAnimals(zoo.getFriendlyAnimals().toList(),
+                            "Животных, пригодных для контактного зоопарка: "
+                                    + zoo.getFriendlyAnimals().toList().size());
                     break;
                 case 4:
                     PrintFood(zoo.getFoodSum());
@@ -35,7 +38,7 @@ public class ZooApplication {
                     AddNewThing(scanner, zoo);
                     break;
                 case 6:
-                    PrintThings(zoo.getThings());
+                    PrintThings(zoo.getThings(), "Вещей в инвентаре: " + zoo.getThingsNumber());
                     break;
                 case 7:
                     return;
@@ -142,14 +145,17 @@ public class ZooApplication {
                 zoo.addThing(new Table(name, id));
                 break;
         }
+        System.out.println("Вещь добавлена в инвентарь");
     }
 
-    static void PrintAnimals(List<Animal> animals) {
+    static void PrintAnimals(List<Animal> animals, String message) {
+        System.out.println(message);
         animals.forEach(a ->
-                System.out.println(a.getName() + "\t" + a.getFood() + "\t" + a.getNumber()));
+                System.out.println(a.toString()));
     }
 
-    static void PrintThings(List<Thing> things) {
+    static void PrintThings(List<Thing> things, String message) {
+        System.out.println(message);
         things.forEach(a ->
                 System.out.println(a.getName() + "\t" + a.getNumber()));
     }

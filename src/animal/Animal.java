@@ -7,6 +7,7 @@ public abstract class Animal implements IAlive, IInventory {
     protected int food;
     protected int inventoryNumber;
 
+
     public Animal(String name, int food, int inventoryNumber) {
         this.name = name;
         this.food = food;
