@@ -3,47 +3,52 @@ package zoo;
 import animal.Animal;
 import animal.Herbo;
 import thing.Thing;
-import zoo.Veterinary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Zoo {
     private List<Animal> animals = new ArrayList<>();
-    private List<Thing> inventory = new ArrayList<>();
-    private Veterinary vetClinic;
+    private List<Thing> things = new ArrayList<>();
+    private Veterinary vet;
 
-    public Zoo(Veterinary vetClinic) {
-        this.vetClinic = vetClinic;
+    public Zoo(Veterinary vet) {
+        this.vet = vet;
     }
 
-    public void addAnimal(Animal animal) {
-        if (vetClinic.HealthCheck(animal)) {
+    public boolean addAnimal(Animal animal) {
+        if (vet.HealthCheck(animal)) {
             animals.add(animal);
-            System.out.println(animal.getName() + " принят в зоопарк.");
+            return true;
         } else {
-            System.out.println(animal.getName() + " не принят в зоопарк (болен).\n");
+            return false;
         }
     }
 
     public void addThing(Thing thing) {
-        inventory.add(thing);
+        things.add(thing);
     }
 
-    public void printFoodConsumption() {
-        int totalFood = animals.stream().mapToInt(Animal::getFood).sum();
-        System.out.println("Общее количество еды, необходимое животным: " + totalFood + " кг/день");
+    public int getFoodSum() {
+        return animals.stream().mapToInt(Animal::getFood).sum();
     }
 
-    public void printFriendlyAnimals() {
-        System.out.println("Животные, подходящие для контактного зоопарка:");
-        animals.stream()
-                .filter(a -> a instanceof Herbo && ((Herbo) a).isFriendly())
-                .forEach(a -> System.out.println(a.getName()));
+    public Stream<Animal> getFriendlyAnimals() {
+        return animals.stream().filter(a -> a instanceof Herbo && ((Herbo) a).isFriendly());
     }
 
-    public void printInventory() {
-        System.out.println("Инвентарь зоопарка:");
-        inventory.forEach(i -> System.out.println(i.getName() + " - ID: " + i.getNumber()));
+    public List<Thing> getThings() {
+        return things;
+    }
+    public List<Animal> getAnimals() {
+        return animals;
+    }
+
+    public int getAnimalsNumber() {
+        return animals.size();
+    }
+    public int getThingsNumber() {
+        return things.size();
     }
 }
